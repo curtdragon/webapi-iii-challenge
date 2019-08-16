@@ -3,7 +3,7 @@ const helmet = require("helmet");
 const server = express();
 
 server.use(helmet());
-server.unsubscribe(express.json());
+server.use(express.json());
 server.use(logger);
 
 server.get('/', (req, res) => {
@@ -17,7 +17,7 @@ function logger(req, res, next) {
   const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
   const time = today.getHours() + ":" + today.getMinutes();
   const timeStamp = date + ' ' + time;
-
+  res.send(`${req.method} Request from URL:`, `${req.protocol}://${req.get('host')}${req.originalUrl}`, `Requested at ${timeStamp}`);
   console.log(`${req.method} Request from URL:`, `${req.protocol}://${req.get('host')}${req.originalUrl}`, `Requested at ${timeStamp}`);
   next();
 };
